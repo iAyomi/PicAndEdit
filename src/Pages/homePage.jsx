@@ -25,7 +25,7 @@ export const Home = () => {
 			</section>
 
 			<section className="middleSection">
-                <Link
+                <Link style={{ textDecoration: "none" }}
                     to={'/create'}
                 >
                     <Button title="Start Creating!" />

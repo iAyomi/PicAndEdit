@@ -1,0 +1,19 @@
+.actionBox {
+    padding: 0.2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.actionImgBox {
+    position: relative;
+    top: 20px;
+}
+
+.actionText {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: #646d86;
+}
