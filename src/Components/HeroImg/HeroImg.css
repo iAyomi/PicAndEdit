@@ -1,0 +1,21 @@
+.heroImgBox {
+    width: 20%;
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-weight: 700;
+}
+
+span {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+img {
+    width: 60px;
+    height: 60px;
+}

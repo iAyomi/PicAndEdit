@@ -1,0 +1,71 @@
+nav {
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 0.4rem;
+    justify-content: space-between;
+}
+
+.myNavBtns {
+    position: relative;
+    right: 80px;
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+}
+
+.myLink {
+    width: 25%;
+}
+
+.btn0 {
+    border: none;
+    width: 100%;
+    padding: 0.45rem;
+    border-radius: 1.2rem;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.btn0:hover {
+    border: solid 4px #000000;
+    box-shadow: 0 0 2px 0 #000000;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.btn1 {
+    width: 100%;
+    padding: 0.45rem;
+    border-radius: 1.2rem;
+    background-color: #ffffff;
+    border: solid 4px #ffffff;
+    box-shadow: 0 0 2px 0 #000000;
+    cursor: pointer;
+}
+
+.btn1:hover {
+    border: solid 4px #000000;
+    background-color: #000000;
+    color: #ffffff
+}
+
+.btn2 {
+    width: 100%;
+    padding: 0.45rem;
+    border-radius: 1.2rem;
+    background-color: #000000;
+    color: #ffffff;
+    border: solid 4px #000000;
+    box-shadow: 0 0 2px 0 #000000;
+    cursor: pointer;
+}
+
+.btn2:hover {
+    border: solid 4px #ffffff;
+    background-color: #ffffff;
+    color: #000000;
+}
