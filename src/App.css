@@ -58,6 +58,7 @@ hr {
 }
 
 .myMainPalette {
+  height: 100vh;
   display: flex;
   justify-content: center;
   width: 98%;
@@ -65,10 +66,12 @@ hr {
 }
 
 .myActionsMenu {
+  height: auto;
   width: 80px;
 }
 
 .myPaletteBox {
+  position: relative;
   width: 95%;
   background-color: #303544;
 }

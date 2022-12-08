@@ -27,6 +27,13 @@ const myStyle={
     }
 }
 
+const styleForMyActionsBox = {
+  height: '100vh', 
+  width: 'auto', 
+  padding: '70px 0 0 0', 
+  bgcolor: '#161a25'
+}
+
 
 const myActions = {
     "Upload": {
@@ -146,7 +153,7 @@ const Actions = () => {
 
   return (
     <Box>
-        <List sx={{ width: 'auto', bgcolor: '#161a25' }}>
+        <List sx={styleForMyActionsBox}>
             {
                 Object.entries(myActions).map(([action, { id, name, logo, tooltip, menuitem }]) => (
                    <span key={action}>
@@ -166,7 +173,7 @@ const Actions = () => {
                             'aria-labelledby': 'demo-customized-button',
                             }}
                             anchorEl={anchorEl}
-                            open={ myStyledMenuId === id ? open: false }
+                            open={ myStyledMenuId === id ? open : false }
                             autoFocus={false}
                             onClose={handleClose}
                         >

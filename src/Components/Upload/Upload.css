@@ -1,0 +1,43 @@
+.uploadCompBox {
+    position: absolute;
+    height: auto;
+    width: 50%;
+    top: 40vh;
+    left: 25%;
+    margin: -50px auto;
+    color: #ffffff;
+}
+
+.uploadCompBoxHeader {
+    font-size: 2.2rem;
+    font-weight: 600;
+}
+
+.uploadCompNote {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.buttonDiv {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.btn {
+    cursor: pointer;
+    min-height: 3.2rem;
+    border-radius: 2rem;
+    width: 20%;
+    border: 2px solid #000000;
+    padding: 0.8rem 0;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background-color: #000000;
+    color: #ffffff;
+    box-shadow: 1px 1px 1px 0 #ffffff;
+}
