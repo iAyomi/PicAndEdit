@@ -8,6 +8,7 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import Tooltip from '@mui/material/Tooltip';
 import Slider from '@mui/material/Slider';
 import InputBase from '@mui/material/InputBase';
+import PaletteIcon from '@mui/icons-material/Palette';
 
 
 
@@ -29,7 +30,7 @@ const MyInput = styled(InputBase)(({ theme }) => ({
       border: '1px solid #ced4da',
       fontSize: 10,
       width: 'auto',
-      padding: '10px 5px',
+      padding: '10px',
       transition: theme.transitions.create([
         'border-color',
         'background-color',
@@ -132,7 +133,7 @@ const RemoveBg = () => {
                     </div>
                     <div className='bgMenuItem'>
                         <h5>Color</h5>
-                        <h5>0</h5>
+                        <Tooltip title="Add background color" arrow><PaletteIcon sx={myIconStyle} /></Tooltip>
                     </div>
                     <div>
                         <div className='bgMenuItem'>
