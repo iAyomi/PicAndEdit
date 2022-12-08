@@ -45,3 +45,13 @@ span {
     color: #000000;
     box-shadow: 1px 1px 1px 0 #646d86;
 }
+
+.myBtn:active {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.myBtn:focus {
+    background-color: #000000;
+    color: #ffffff;
+}

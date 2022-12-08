@@ -9,6 +9,10 @@ import Tooltip from '@mui/material/Tooltip';
 import Slider from '@mui/material/Slider';
 import InputBase from '@mui/material/InputBase';
 import PaletteIcon from '@mui/icons-material/Palette';
+import { HexColorPicker } from "react-colorful";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Fade from '@mui/material/Fade';
 
 
 
@@ -42,11 +46,59 @@ const MyInput = styled(InputBase)(({ theme }) => ({
       },
     },
   }));
-  
 
+
+const ColorMenu = styled((props) => (
+    <Menu
+      TransitionComponent={Fade}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      {...props}
+    />
+  ))(({ theme }) => ({
+    '& .MuiPaper-root': {
+      height: 'auto',  
+      width: 'auto',
+      borderRadius: 4,
+      backgroundColor: '#646d86',
+      marginLeft: '250px',
+      boxShadow:
+        'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+      '& .MuiMenu-list': {
+        padding: '0'
+      }
+    }
+  }));
 
 
 const RemoveBg = () => {
+
+    const [openRemoveBg, setOpenRemoveBg] = useState('block');
+
+    const myDrawerStyle = {
+        width: 220,
+        height: '92%',
+        bgcolor: '#161a25',
+        borderLeft: '2.5px solid #ffffff',
+        color: '#646d86',
+        display: openRemoveBg
+    }
+
+    const myIconStyle = {
+        cursor: 'pointer',
+        width: '20px',
+        height: "20px",
+        color: '#646d86',
+        "&:hover": {
+            color: "#ffffff"
+        }
+    }
 
     const [openBgMenu, setOpenBgMenu] = useState(false);
 
@@ -54,6 +106,13 @@ const RemoveBg = () => {
         display: 'none', 
         height: 0
     });
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const [color, setColor] = useState("");
+    const [blur, setBlur] = useState(0)
+
+    const open = Boolean(anchorEl);
 
     useEffect(() => {
         if (openBgMenu === false) {
@@ -74,41 +133,30 @@ const RemoveBg = () => {
         setOpenBgMenu(!openBgMenu)
     }
 
-    const [open, setOpen] = useState(true);
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
+    const closeRemoveBg = () => {
+        setOpenRemoveBg('none');
     };
     
 
-    const myDrawerStyle = {
-        width: 220,
-        height: '92%',
-        bgcolor: '#161a25',
-        borderLeft: '2.5px solid #ffffff',
-        color: '#646d86',
+    const handleBgImageClick = () => {
+
     }
 
-    const myIconStyle = {
-        cursor: 'pointer',
-        width: '20px',
-        height: "20px",
-        color: '#646d86',
-        "&:hover": {
-            color: "#ffffff"
-        }
+    const handleBgColorClick = (event) => {
+        setAnchorEl(event.currentTarget);
     }
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
   return (
     <Box
         sx={myDrawerStyle}
     >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose} sx={{bgcolor: '#000000'}}>
+          <IconButton onClick={closeRemoveBg} sx={{bgcolor: '#000000'}}>
             <CancelIcon sx={myIconStyle} />
           </IconButton>
         </DrawerHeader>
@@ -129,16 +177,42 @@ const RemoveBg = () => {
                 <div>
                     <div className='bgMenuItem'>
                         <h5>Image</h5>
-                        <Tooltip title="Add background image" arrow><AddToPhotosIcon sx={myIconStyle} /></Tooltip>
+                        <Tooltip title="Add background image" arrow><AddToPhotosIcon sx={myIconStyle} onClick={handleBgImageClick} /></Tooltip>
                     </div>
-                    <div className='bgMenuItem'>
-                        <h5>Color</h5>
-                        <Tooltip title="Add background color" arrow><PaletteIcon sx={myIconStyle} /></Tooltip>
+                    <div>
+                        <div className='bgMenuItem'>
+                            <h5>Color</h5>
+                            <Tooltip title="Add background color" arrow><PaletteIcon sx={myIconStyle} onClick={handleBgColorClick} /></Tooltip>
+                            <ColorMenu
+                                id="demo-customized-menu"
+                                MenuListProps={{
+                                'aria-labelledby': 'demo-customized-button',
+                                }}
+                                anchorEl={anchorEl}
+                                open={open}
+                                autoFocus={false}
+                                onClose={handleClose}
+                            >
+                                <MenuItem>
+                                    <HexColorPicker color={color} onChange={setColor} />
+                                </MenuItem>
+                            </ColorMenu>
+                        </div>
+                        <div className='bgMenuItem'>
+                            <div style={{ height: '25px', width: '12%', backgroundColor: color, borderRadius: '0.3rem' }}></div>
+                            <MyInput 
+                                id="my-color-input-box"
+                                placeholder="add background color"
+                                value={color}
+                                disabled
+                            />
+                        </div>
+                       
                     </div>
                     <div>
                         <div className='bgMenuItem'>
                             <h5>Blur</h5>
-                            <h5>0</h5>
+                            <h5>{blur}</h5>
                         </div>
                         <Slider
                             sx={{width: '80%', margin: 'auto'}}
@@ -146,6 +220,7 @@ const RemoveBg = () => {
                             defaultValue={0}
                             aria-label="Small"
                             valueLabelDisplay="auto"
+                            onChange={(event, newValue) => {setBlur(newValue)}}
                         />
                     </div>
                     <div className='bgMenuItem'>
