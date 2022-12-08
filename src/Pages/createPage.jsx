@@ -4,6 +4,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Upload from '../Components/Upload/Upload';
 import RemoveBg from '../Components/RemoveBg/RemoveBg';
+import Vectorize from '../Components/Vectorize/Vectorize';
+import AdjustImg from '../Components/AdjustImg/AdjustImg';
 
 
 
@@ -20,7 +22,9 @@ export const Create = () => {
                     <h6 className="myPaletteHeaderText">{"Upload"} &nbsp;&nbsp; | &nbsp;&nbsp; W: <span>{"150px"}</span> &nbsp; H: <span>{"150px"}</span> &nbsp;&nbsp; | &nbsp;&nbsp; Image Size: <span>{"150MB"}</span> </h6>
                 </Box>
                 {/* <Upload /> */}
-                <RemoveBg />
+                {/* <RemoveBg /> */}
+                {/* <Vectorize /> */}
+                <AdjustImg />
             </Box>
         </Box>
     </React.Fragment>

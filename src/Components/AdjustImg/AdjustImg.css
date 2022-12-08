@@ -1,0 +1,14 @@
+.adjustOption {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.myAdjustBtnDiv {
+    margin: 10px auto;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
