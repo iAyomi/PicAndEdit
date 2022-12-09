@@ -6,6 +6,8 @@ import Upload from '../Components/Upload/Upload';
 import RemoveBg from '../Components/RemoveBg/RemoveBg';
 import Vectorize from '../Components/Vectorize/Vectorize';
 import AdjustImg from '../Components/AdjustImg/AdjustImg';
+import TransferStyle from '../Components/TransferStyle/TransferStyle';
+import GenTexture from '../Components/GenTexture/GenTexture';
 
 
 
@@ -24,7 +26,9 @@ export const Create = () => {
                 {/* <Upload /> */}
                 {/* <RemoveBg /> */}
                 {/* <Vectorize /> */}
-                <AdjustImg />
+                {/* <AdjustImg /> */}
+                {/* <TransferStyle /> */}
+                <GenTexture />
             </Box>
         </Box>
     </React.Fragment>
