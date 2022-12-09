@@ -8,6 +8,8 @@ import Vectorize from '../Components/Vectorize/Vectorize';
 import AdjustImg from '../Components/AdjustImg/AdjustImg';
 import TransferStyle from '../Components/TransferStyle/TransferStyle';
 import GenTexture from '../Components/GenTexture/GenTexture';
+import AddEffects from '../Components/AddEffects/AddEffects';
+import AddMasks from '../Components/AddMasks/AddMasks';
 
 
 
@@ -28,7 +30,9 @@ export const Create = () => {
                 {/* <Vectorize /> */}
                 {/* <AdjustImg /> */}
                 {/* <TransferStyle /> */}
-                <GenTexture />
+                {/* <GenTexture /> */}
+                {/* <AddEffects /> */}
+                <AddMasks />
             </Box>
         </Box>
     </React.Fragment>
