@@ -10,6 +10,11 @@ import TransferStyle from '../Components/TransferStyle/TransferStyle';
 import GenTexture from '../Components/GenTexture/GenTexture';
 import AddEffects from '../Components/AddEffects/AddEffects';
 import AddMasks from '../Components/AddMasks/AddMasks';
+import Upscale from '../Components/Upscale/Upscale';
+import UpscaleEnhance from '../Components/UpscaleEnhance/UpscaleEnhance';
+import UpscaleUltra from '../Components/UpscaleUltra/UpscaleUltra';
+import UpscaleFace from '../Components/UpscaleFace/UpscaleFace';
+
 
 
 
