@@ -2,12 +2,12 @@ import React from 'react';
 import Actions from '../Components/Actions/Actions';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import Upload from '../Components/Upload/Upload';
+import AdjustImg from '../Components/AdjustImg/AdjustImg';
+import PictureBox from '../Components/PictureBox/PictureBox';
 import PaletteHeader from '../Components/PaletteHeader/PaletteHeader';
 
 
-
-export const Create = () => {
+export const AdjustImagePage = () => {
   return (
     <React.Fragment>
         <CssBaseline />
@@ -16,9 +16,10 @@ export const Create = () => {
                 <Actions />
             </Box>
             <Box className="myPaletteBox">
-                <PaletteHeader />
+               <PaletteHeader />
                 <Box className="myPaletteMain">
-                    <Upload />
+                    <AdjustImg />
+                    <PictureBox />
                 </Box>
             </Box>
         </Box>

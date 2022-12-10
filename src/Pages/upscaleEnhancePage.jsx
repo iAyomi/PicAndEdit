@@ -2,12 +2,13 @@ import React from 'react';
 import Actions from '../Components/Actions/Actions';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import Upload from '../Components/Upload/Upload';
+import UpscaleEnhance from '../Components/UpscaleEnhance/UpscaleEnhance';
+import PictureBox from '../Components/PictureBox/PictureBox';
 import PaletteHeader from '../Components/PaletteHeader/PaletteHeader';
 
 
 
-export const Create = () => {
+export const UpscaleEnhancePage = () => {
   return (
     <React.Fragment>
         <CssBaseline />
@@ -16,9 +17,10 @@ export const Create = () => {
                 <Actions />
             </Box>
             <Box className="myPaletteBox">
-                <PaletteHeader />
+               <PaletteHeader />
                 <Box className="myPaletteMain">
-                    <Upload />
+                    <UpscaleEnhance />
+                    <PictureBox />
                 </Box>
             </Box>
         </Box>

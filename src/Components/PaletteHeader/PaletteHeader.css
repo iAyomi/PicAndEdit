@@ -1,0 +1,17 @@
+.myPaletteHeader {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 8vh;
+    width: auto;
+    background-color: #232734;
+    color: #ffffff;
+  }
+  
+  .myPaletteHeaderText {
+    width: 95%;
+    margin: auto;
+    text-align: start;
+    font-size: 0.8rem;
+    font-weight: 800;
+  }

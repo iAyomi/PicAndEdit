@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const myNavs = {
     Home: { link: "/", className: "btn0" },
-    Create: { link: "/create", className: "btn1" },
+    Create: { link: "/upload", className: "btn1" },
     "Brand ur Biz": { link: "/brandurbiz", className: "btn2" }
 };
 

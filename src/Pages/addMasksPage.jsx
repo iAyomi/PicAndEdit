@@ -2,12 +2,13 @@ import React from 'react';
 import Actions from '../Components/Actions/Actions';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import Upload from '../Components/Upload/Upload';
+import AddMasks from '../Components/AddMasks/AddMasks';
+import PictureBox from '../Components/PictureBox/PictureBox';
 import PaletteHeader from '../Components/PaletteHeader/PaletteHeader';
 
 
 
-export const Create = () => {
+export const AddMasksPage = () => {
   return (
     <React.Fragment>
         <CssBaseline />
@@ -18,7 +19,8 @@ export const Create = () => {
             <Box className="myPaletteBox">
                 <PaletteHeader />
                 <Box className="myPaletteMain">
-                    <Upload />
+                    <AddMasks />
+                    <PictureBox />
                 </Box>
             </Box>
         </Box>

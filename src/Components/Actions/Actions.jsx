@@ -16,6 +16,7 @@ import MergeTypeIcon from "@mui/icons-material/MergeType";
 import MailIcon from "@mui/icons-material/Mail";
 import Tooltip from '@mui/material/Tooltip';
 import Fade from '@mui/material/Fade';
+import { Link } from 'react-router-dom';
 
 
 const myStyle={
@@ -34,63 +35,118 @@ const styleForMyActionsBox = {
   bgcolor: '#161a25'
 }
 
-
 const myActions = {
     "Upload": {
         id: "1", 
         name: "upload img", 
         logo: <FileUploadIcon sx={myStyle} />, 
         tooltip: "upload any image",
-        menuitem: ["upload"] 
+        menu: {
+          "upload": {
+            menuname: "upload",
+            menulink: "/upload"
+          }
+        } 
     },
     "Remove Background": {
         id: "2",  
         name: "remove bg", 
         logo: <WallpaperIcon sx={myStyle} />, 
         tooltip: "remove image background",
-        menuitem: ["remove bg"] 
+        menu: {
+          "removeBg": {
+            menuname: "remove bg",
+            menulink: "/removebackground"
+          }
+        } 
     },
     "Enhance": {
         id: "3",  
         name: "enhance img", 
         logo: <CameraEnhanceIcon sx={myStyle} />, 
         tooltip: "enhance image",
-        menuitem: ["upscale", "upscale ultra", "upscale enhance", "upscale face"] 
+        menu: {
+          "upscale": {
+            menuname: "upscale",
+            menulink: "/upscale"
+          },
+          "upscaleUltra": {
+            menuname: "upscale ultra",
+            menulink: "/upscaleultra"
+          },
+          "upscaleEnhance": {
+            menuname: "upscale enhance",
+            menulink: "/upscaleenhance"
+          },
+          "upscaleFace": {
+            menuname: "upscale face",
+            menulink: "/upscaleface"
+          }
+        }
     },
     "Add Effects": {
         id: "4",  
         name: "add effects", 
         logo: <AutoFixHighIcon sx={myStyle} />, 
         tooltip: "add effects to image",
-        menuitem: ["add effects", "add masks"] 
+        menu: {
+          "addEffects": {
+            menuname: "add effects",
+            menulink: "/addeffects"
+          },
+          "addMasks": {
+            menuname: "add masks",
+            menulink: "/addmasks"
+          }
+        }
     },
     "Adjust": {
         id: "5",  
         name: "adjust img", 
         logo: <MailIcon sx={myStyle} />, 
         tooltip: "adjust image properties",
-        menuitem: ["adjust img"]
+        menu: {
+          "adjustImg": {
+            menuname: "adjust img",
+            menulink: "/adjustimage"
+          }
+        }
     },
     "Transfer Style": {
         id: "6",  
         name: "tf style", 
         logo: <CompareIcon sx={myStyle} />, 
         tooltip: "transfer style from image",
-        menuitem: ["tf style"] 
+        menu: {
+          "transferStyle": {
+            menuname: "tf style",
+            menulink: "/transferstyle"
+          }
+        }
     },
     "Generate Content": {
         id: "7",  
         name: "gen texture", 
         logo: <BlurLinearIcon sx={myStyle} />, 
         tooltip: "generate textures",
-        menuitem: ["gen texture"]
+        menu: {
+          "generateTexture": {
+            menuname: "gen texture",
+            menulink: "/generatetexture"
+          }
+        }
     },
     "Convert": {
         id: "8",  
         name: "vectorize", 
         logo: <MergeTypeIcon sx={myStyle} />, 
         tooltip: "vectorize image",
-        menuitem: ["vectorize"]
+        menu: {
+          "vectorize": {
+            menuname: "vectorize",
+            menulink: "/vectorize"
+          }
+        }
     }
 }
 
@@ -155,7 +211,7 @@ const Actions = () => {
     <Box>
         <List sx={styleForMyActionsBox}>
             {
-                Object.entries(myActions).map(([action, { id, name, logo, tooltip, menuitem }]) => (
+                Object.entries(myActions).map(([action, { id, name, logo, tooltip, menu }]) => (
                    <span key={action}>
                     <Tooltip title={tooltip} followCursor >
                          <ListItem className="actionBox" disablePadding onClick={(event) => handleClick(id, event)} >
@@ -165,28 +221,29 @@ const Actions = () => {
                             <h6 className="actionText">{name}</h6>
                         </ListItem>
                    </Tooltip>
-                    {
-                        menuitem.length > 0
-                        ? <StyledMenu
-                            id="demo-customized-menu"
-                            MenuListProps={{
-                            'aria-labelledby': 'demo-customized-button',
-                            }}
-                            anchorEl={anchorEl}
-                            open={ myStyledMenuId === id ? open : false }
-                            autoFocus={false}
-                            onClose={handleClose}
-                        >
-                            {
-                                menuitem.map((menu, index) => (
-                                    <MenuItem key={index} style={{fontSize: '0.65rem', fontWeight: '600'}} onClick={handleClose} disableRipple>
-                                        {menu}
-                                    </MenuItem>
-                                ))
-                            }
-                        </StyledMenu>
-                        : <></>
-                    }
+
+                    <StyledMenu
+                      id="demo-customized-menu"
+                      MenuListProps={{
+                      'aria-labelledby': 'demo-customized-button',
+                      }}
+                      anchorEl={anchorEl}
+                      open={ myStyledMenuId === id ? open : false }
+                      autoFocus={false}
+                      onClose={handleClose}
+                    >
+                      {
+                          Object.entries(menu).map(([menuItem, { menuname, menulink }]) => (
+                              <Link key={menuItem} style={{ color: "#ffffff", textDecoration: "none" }}
+                                to={menulink}
+                              >
+                                <MenuItem style={{fontSize: '0.65rem', fontWeight: '600'}} onClick={handleClose} disableRipple>
+                                  {menuname}
+                                </MenuItem>
+                              </Link>
+                          ))
+                      }
+                    </StyledMenu>
                    </span>
                 ))
             }

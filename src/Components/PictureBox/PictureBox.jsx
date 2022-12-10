@@ -1,7 +1,6 @@
 import React from 'react';
 import './PictureBox.css';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import Box from '@mui/material/Box';
 
 
 const PictureBox = () => {
