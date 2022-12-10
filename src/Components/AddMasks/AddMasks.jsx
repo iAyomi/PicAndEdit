@@ -31,7 +31,7 @@ const AddMasks = () => {
 
     const myDrawerStyle = {
         width: 220,
-        height: '92%',
+        height: '100%',
         bgcolor: '#161a25',
         borderLeft: '2.5px solid #ffffff',
         color: '#646d86',

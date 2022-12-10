@@ -14,8 +14,7 @@ import Upscale from '../Components/Upscale/Upscale';
 import UpscaleEnhance from '../Components/UpscaleEnhance/UpscaleEnhance';
 import UpscaleUltra from '../Components/UpscaleUltra/UpscaleUltra';
 import UpscaleFace from '../Components/UpscaleFace/UpscaleFace';
-
-
+import PictureBox from '../Components/PictureBox/PictureBox';
 
 
 export const Create = () => {
@@ -30,14 +29,21 @@ export const Create = () => {
                 <Box className="myPaletteHeader">
                     <h6 className="myPaletteHeaderText">{"Upload"} &nbsp;&nbsp; | &nbsp;&nbsp; W: <span>{"150px"}</span> &nbsp; H: <span>{"150px"}</span> &nbsp;&nbsp; | &nbsp;&nbsp; Image Size: <span>{"150MB"}</span> </h6>
                 </Box>
-                {/* <Upload /> */}
-                {/* <RemoveBg /> */}
-                {/* <Vectorize /> */}
-                {/* <AdjustImg /> */}
-                {/* <TransferStyle /> */}
-                {/* <GenTexture /> */}
-                {/* <AddEffects /> */}
-                <AddMasks />
+                <Box className="myPaletteMain">
+                    {/* <Upload /> */}
+                    <RemoveBg />
+                    {/* <Vectorize /> */}
+                    {/* <AdjustImg /> */}
+                    {/* <TransferStyle /> */}
+                    {/* <GenTexture /> */}
+                    {/* <AddEffects /> */}
+                    {/* <AddMasks /> */}
+                    {/* <Upscale /> */}
+                    {/* <UpscaleUltra /> */}
+                    {/* <UpscaleEnhance /> */}
+                    {/* <UpscaleFace /> */}
+                    <PictureBox />
+                </Box>
             </Box>
         </Box>
     </React.Fragment>

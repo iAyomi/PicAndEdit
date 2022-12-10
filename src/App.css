@@ -80,7 +80,7 @@ hr {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  height: 8%;
+  height: 8vh;
   width: auto;
   background-color: #232734;
   color: #ffffff;
@@ -92,6 +92,11 @@ hr {
   text-align: start;
   font-size: 0.8rem;
   font-weight: 800;
+}
+.myPaletteMain {
+  height: 92vh;
+  display: flex;
+  justify-content: space-between;
 }
 
 

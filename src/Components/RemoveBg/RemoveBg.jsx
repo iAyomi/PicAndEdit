@@ -15,7 +15,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 
 
-
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
@@ -84,7 +83,7 @@ const RemoveBg = () => {
 
     const myDrawerStyle = {
         width: 220,
-        height: '92%',
+        height: '100%',
         bgcolor: '#161a25',
         borderLeft: '2.5px solid #ffffff',
         color: '#646d86',
