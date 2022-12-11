@@ -1,30 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import routes from './Services/routes';
+import { UploadedPictureContext } from './Services/Contexts/UploadedPicture';
 
 
 function App() {
+
+  const [uploadedPicture, setUploadedPicture] = useState({
+    id: "",
+    url: ""
+  });
+
   return (
-    <Router>
-      <div>
+    <UploadedPictureContext.Provider value={{uploadedPicture, setUploadedPicture}}>
+        <Router>
+          <div>
 
-        <Navbar />
+            <Navbar />
 
-        <Routes>
-        {
-          Object.entries(routes).map(([route, Component]) => (
-            <Route key={route} path={route} element={<Component />} />
-          ))
-        }
-      </Routes>
+            <Routes>
+            {
+              Object.entries(routes).map(([route, Component]) => (
+                <Route key={route} path={route} element={<Component />} />
+              ))
+            }
+          </Routes>
 
-      <Footer />
+          <Footer />
 
-      </div>
-    </Router>
+          </div>
+        </Router>
+    </UploadedPictureContext.Provider>
   );
 }
 

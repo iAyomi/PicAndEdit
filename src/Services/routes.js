@@ -12,6 +12,7 @@ import { UpscaleEnhancePage } from "../Pages/upscaleEnhancePage";
 import { UpscaleFacePage } from "../Pages/upscaleFacePage";
 import { UpscalePage } from "../Pages/upscalePage";
 import { UpscaleUltraPage } from "../Pages/upscaleUltraPage";
+import { UploadedPicturePage } from "../Pages/uploadedPicturePage";
 
 
 
@@ -29,7 +30,8 @@ const routes = {
 	"/adjustimage": () => <AdjustImagePage />,
 	"/transferstyle": () => <TransferStylePage />,
 	"/generatetexture": () => <GenerateTexturePage />,
-	"/vectorize": () => <VectorizePage />
+	"/vectorize": () => <VectorizePage />,
+	"/uploadedpicture": () => <UploadedPicturePage />
 };
 
 
