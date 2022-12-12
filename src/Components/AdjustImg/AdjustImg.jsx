@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import './AdjustImg.css';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Slider from '@mui/material/Slider';
+import { UploadedPictureContext } from '../../Services/Contexts/UploadedPicture';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
@@ -20,6 +23,15 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 const AdjustImg = () => {
+
+    const myHeadersList = {
+        "accept": "application/json",
+        "X-Picsart-API-Key": "nZ1AmcPL4DNbTNqU6hIezYkXxLSDlxpR"
+    }
+    
+    const myUrl = "https://api.picsart.io/tools/1.0/adjust";
+
+    const { uploadedPicture, setUploadedPicture } = useContext(UploadedPictureContext);
 
     const [openAdjustImg, setOpenAdjustImg] = useState('block');
 
@@ -68,6 +80,16 @@ const AdjustImg = () => {
         margin: 'auto'
     }
 
+    const [openBackdrop, setOpenBackdrop] = useState(false);
+
+    const handleCloseBackdrop = () => {
+        setOpenBackdrop(false);
+    };
+
+    const handleToggleBackdrop = () => {
+        setOpenBackdrop(!openBackdrop);
+    };
+
     const closeAdjustImg = () => {
         setOpenAdjustImg('none');
     };
@@ -88,6 +110,46 @@ const AdjustImg = () => {
             vignette: 0
         }))
     }
+
+    const handleAdjustImgFn = () => {
+        if (uploadedPicture.id !== null) {
+            handleToggleBackdrop();
+            async function adjustImage() {
+              let headerslist = myHeadersList;
+              let bodyContent = new FormData();
+              bodyContent.append("image_id", uploadedPicture.id);
+              bodyContent.append("format", "JPG");
+              bodyContent.append("brightness", adjustImgValues.brightness);
+              bodyContent.append("contrast", adjustImgValues.contrast);
+              bodyContent.append("clarity", adjustImgValues.clarity);
+              bodyContent.append("saturation", adjustImgValues.saturation);
+              bodyContent.append("hue", adjustImgValues.hue);
+              bodyContent.append("shadows", adjustImgValues.shadows);
+              bodyContent.append("highlights", adjustImgValues.highlights);
+              bodyContent.append("temperature", adjustImgValues.temperature);
+              bodyContent.append("sharpen", adjustImgValues.sharpen);
+              bodyContent.append("noise", adjustImgValues.noise);
+              bodyContent.append("vignette", adjustImgValues.vignette);
+             
+              let response = await fetch(myUrl, {
+                  method: "POST",
+                  body: bodyContent,
+                  headers: headerslist
+              });
+              if (response.status === 200) {
+                handleCloseBackdrop();
+                  let data = await response.json();
+                  setUploadedPicture({
+                    id: data.data.id,
+                    url: data.data.url
+                });
+            } else {
+                handleCloseBackdrop();
+                let error = await response.json();
+                console.log(error);
+        }}
+        adjustImage();
+    }}
 
   return (
     <Box
@@ -315,8 +377,15 @@ const AdjustImg = () => {
 
         <div className='myAdjustBtnDiv'>
             <button className='myBtn' onClick={handleResetClick}>Reset</button>
-            <button className='myBtn'>Done</button>
+            <button className='myBtn' onClick={handleAdjustImgFn}>Done</button>
         </div>
+
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={openBackdrop}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
 
     </Box>
   )

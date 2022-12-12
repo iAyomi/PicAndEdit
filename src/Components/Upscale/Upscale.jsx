@@ -27,7 +27,7 @@ const Upscale = () => {
 
   const myHeadersList = {
     "accept": "application/json",
-    "X-Picsart-API-Key": "74Y5uzphxL3bwB3icSOQAWTk3tHZaqB4"
+    "X-Picsart-API-Key": "nZ1AmcPL4DNbTNqU6hIezYkXxLSDlxpR"
   }
 
   const myUrl = "https://api.picsart.io/tools/1.0/upscale";
@@ -78,6 +78,10 @@ const Upscale = () => {
               id: data.data.id,
               url: data.data.url
           });
+      } else {
+        handleCloseBackdrop();
+        let error = await response.json();
+        console.log(error);
       }}
     upscaleImage();
   }}
@@ -138,7 +142,6 @@ const Upscale = () => {
         <Backdrop
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={openBackdrop}
-          onClick={handleCloseBackdrop}
         >
           <CircularProgress color="inherit" />
         </Backdrop>

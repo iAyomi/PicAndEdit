@@ -11,7 +11,11 @@ function App() {
 
   const [uploadedPicture, setUploadedPicture] = useState({
     id: "",
-    url: ""
+    url: "",
+    action: "",
+    width: "",
+    height: "",
+    size: ""
   });
 
   return (

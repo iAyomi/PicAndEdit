@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { alpha, styled } from '@mui/material/styles';
 import './GenTexture.css';
 import Box from '@mui/material/Box';
@@ -10,6 +10,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { UploadedPictureContext } from '../../Services/Contexts/UploadedPicture';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
@@ -49,11 +52,40 @@ const MyInput = styled(InputBase)(({ theme }) => ({
 
 const GenTexture = () => {
 
+    const myHeadersList = {
+        "accept": "application/json",
+        "X-Picsart-API-Key": "nZ1AmcPL4DNbTNqU6hIezYkXxLSDlxpR"
+    }
+    
+    const myUrl = "https://api.picsart.io/tools/1.0/background/texture";
+
+    const { uploadedPicture, setUploadedPicture } = useContext(UploadedPictureContext);
+
     const [openGenTexture, setOpenGenTexture] = useState('block');
+
+    const [width, setWidth] = useState("1024");
+
+    const [height, setHeight] = useState("1024");
+
+    const [offsetX, setOffsetX] = useState("0");
+
+    const [offsetY, setOffsetY] = useState("0");
 
     const [patternOfBgTexture, setPatternOfBgTexture] = useState('hex');
 
     const [rotateVal, setRotateVal] = useState(0);
+
+    const [scale, setScale] = useState("1");
+
+    const [openBackdrop, setOpenBackdrop] = useState(false);
+
+    const handleCloseBackdrop = () => {
+        setOpenBackdrop(false);
+    };
+
+    const handleToggleBackdrop = () => {
+        setOpenBackdrop(!openBackdrop);
+    };
 
     const closeGenTexture = () => {
         setOpenGenTexture('none');
@@ -62,6 +94,42 @@ const GenTexture = () => {
     const handleChange = (event) => {
         setPatternOfBgTexture(event.target.value);
     };
+
+    const handleGenTextureFn = () => {
+        if (uploadedPicture.id !== null) {
+            handleToggleBackdrop();
+            async function genTexture() {
+              let headerslist = myHeadersList;
+              let bodyContent = new FormData();
+              bodyContent.append("image_id", uploadedPicture.id);
+              bodyContent.append("format", "JPG");
+              bodyContent.append("width", width);
+              bodyContent.append("height", height);
+              bodyContent.append("offset_x", offsetX);
+              bodyContent.append("offset_y", offsetY);
+              bodyContent.append("pattern", patternOfBgTexture);
+              bodyContent.append("rotate", rotateVal);
+              bodyContent.append("scale", scale);
+             
+              let response = await fetch(myUrl, {
+                  method: "POST",
+                  body: bodyContent,
+                  headers: headerslist
+              });
+              if (response.status === 200) {
+                handleCloseBackdrop();
+                  let data = await response.json();
+                  setUploadedPicture({
+                    id: data.data.id,
+                    url: data.data.url
+                });
+            } else {
+                handleCloseBackdrop();
+                let error = await response.json();
+                console.log(error);
+        }}
+        genTexture();
+    }}
 
     const myDrawerStyle = {
         width: 220,
@@ -109,7 +177,8 @@ const GenTexture = () => {
             <MyInput
                 placeholder="width in pixels"
                 id="my-input-box"
-                defaultValue={1024}
+                value={width}
+                onChange={(event) => {(setWidth(event.target.value))}}
             />
         </div>
 
@@ -118,7 +187,8 @@ const GenTexture = () => {
             <MyInput
                 placeholder="height in pixels"
                 id="my-input-box"
-                defaultValue={1024}
+                value={height}
+                onChange={(event) => {(setHeight(event.target.value))}}
             />
         </div>
 
@@ -127,7 +197,8 @@ const GenTexture = () => {
             <MyInput
                 placeholder="in pixels"
                 id="my-input-box"
-                defaultValue={0}
+                value={offsetX}
+                onChange={(event) => {(setOffsetX(event.target.value))}}
             />
         </div>
 
@@ -136,7 +207,8 @@ const GenTexture = () => {
             <MyInput
                 placeholder="in pixels"
                 id="my-input-box"
-                defaultValue={0}
+                value={offsetY}
+                onChange={(event) => {(setOffsetY(event.target.value))}}
             />
         </div>
 
@@ -184,14 +256,24 @@ const GenTexture = () => {
                 <MyInput
                     placeholder="enter a number"
                     id="my-input-box"
-                    defaultValue={1.0}
+                    value={scale}
+                    onChange={(event) => {(setScale(event.target.value))}}
                 />
             </div>
             <p>Enter a floating point number between 0.0 - 10.0</p>
             <p>Default scale value is 1.0</p>
         </div>
 
-        
+        <Box style={{ marginTop: '40px' }}>
+          <button className='myBtn' onClick={handleGenTextureFn}>Done</button>
+        </Box>
+
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={openBackdrop}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
 
     </Box>
   )

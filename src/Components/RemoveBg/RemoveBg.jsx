@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { alpha, styled } from '@mui/material/styles';
 import "./RemoveBg.css";
 import Box from '@mui/material/Box';
@@ -13,6 +13,9 @@ import { HexColorPicker } from "react-colorful";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
+import { UploadedPictureContext } from '../../Services/Contexts/UploadedPicture';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -100,6 +103,15 @@ const RemoveBg = () => {
         }
     }
 
+    const myHeadersList = {
+        "accept": "application/json",
+        "X-Picsart-API-Key": "nZ1AmcPL4DNbTNqU6hIezYkXxLSDlxpR"
+    }
+    
+    const myUrl = "https://api.picsart.io/tools/1.0/removebg";
+
+    const { uploadedPicture, setUploadedPicture } = useContext(UploadedPictureContext);
+
     const [openBgMenu, setOpenBgMenu] = useState(false);
 
     const [myBgMenuState, setMyBgMenuState] = useState({
@@ -108,9 +120,6 @@ const RemoveBg = () => {
     });
 
     const [anchorEl, setAnchorEl] = useState(null);
-
-    const [color, setColor] = useState("");
-    const [blur, setBlur] = useState(0)
 
     const open = Boolean(anchorEl);
 
@@ -129,27 +138,90 @@ const RemoveBg = () => {
         }
     }, [openBgMenu]);
 
+    const [color, setColor] = useState("");
+
+    const [blur, setBlur] = useState(0);
+
+    const [outputType, setOutputType] = useState('');
+
+    const [bgWidth, setBgWidth] = useState("");
+
+    const [bgHeight, setBgHeight] = useState("");
+
+    const [scale, setScale] = useState("fit");
+
+    const [openBackdrop, setOpenBackdrop] = useState(false);
+
+    const handleCloseBackdrop = () => {
+        setOpenBackdrop(false);
+    };
+
+    const handleToggleBackdrop = () => {
+        setOpenBackdrop(!openBackdrop);
+    };
+
     const handleClick = () => {
         setOpenBgMenu(!openBgMenu)
-    }
-
+    };
 
     const closeRemoveBg = () => {
         setOpenRemoveBg('none');
     };
-    
+
+    const handleOutputOptionClick = (event) => {
+        setOutputType(event.target.value);
+    };
+
+    const handleScaleOptionClick = (event) => {
+        setScale(event.target.value);
+    };
 
     const handleBgImageClick = () => {
 
-    }
+    };
 
     const handleBgColorClick = (event) => {
         setAnchorEl(event.currentTarget);
-    }
+    };
 
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleRemoveBgFn = () => {
+        if (uploadedPicture.id !== null) {
+            handleToggleBackdrop();
+            async function removeImageBg() {
+              let headerslist = myHeadersList;
+              let bodyContent = new FormData();
+              bodyContent.append("image_id", uploadedPicture.id);
+              bodyContent.append("format", "JPG");
+              bodyContent.append("output_type", outputType);
+              bodyContent.append("bg_color", color);
+              bodyContent.append("bg_blur", blur);
+              bodyContent.append("bg_width", bgWidth);
+              bodyContent.append("bg_height", bgHeight);
+              bodyContent.append("scale", scale);
+             
+              let response = await fetch(myUrl, {
+                  method: "POST",
+                  body: bodyContent,
+                  headers: headerslist
+              });
+              if (response.status === 200) {
+                handleCloseBackdrop();
+                  let data = await response.json();
+                  setUploadedPicture({
+                    id: data.data.id,
+                    url: data.data.url
+                });
+            } else {
+                handleCloseBackdrop();
+                let error = await response.json();
+                console.log(error);
+        }}
+        removeImageBg();
+    }}
 
   return (
     <Box
@@ -164,8 +236,8 @@ const RemoveBg = () => {
         <Box>
             <h5>Output Option</h5>
             <div className='myBgBtnDiv'>
-                <button className='myBtn'>Cutout</button>
-                <button className='myBtn'>Mask</button>
+                <button className='myBtn' value={"cutout"} onClick={handleOutputOptionClick}>Cutout</button>
+                <button className='myBtn' value={"mask"} onClick={handleOutputOptionClick}>Mask</button>
             </div>
         </Box>
 
@@ -228,6 +300,8 @@ const RemoveBg = () => {
                         <MyInput
                             placeholder="width in pixels"
                             id="my-input-box"
+                            value={bgWidth}
+                            onChange={(event) => {setBgWidth(event.target.value)}}
                         />
                     </div>
                     <div className='bgMenuItem'>
@@ -235,6 +309,8 @@ const RemoveBg = () => {
                         <MyInput
                             placeholder="height in pixels"
                             id="my-input-box"
+                            value={bgHeight}
+                            onChange={(event) => {setBgHeight(event.target.value)}}
                         />
                     </div>
                 </div>
@@ -244,10 +320,22 @@ const RemoveBg = () => {
         <Box>
             <h5>Scale</h5>
             <div className='myBgBtnDiv'>
-                <button className='myBtn'>Fit</button>
-                <button className='myBtn'>Fill</button>
+                <button value={"fit"} className='myBtn' onClick={handleScaleOptionClick}>Fit</button>
+                <button value={"fill"} className='myBtn' onClick={handleScaleOptionClick}>Fill</button>
             </div>
         </Box>
+
+        <Box style={{ marginTop: '40px' }}>
+          <button className='myBtn' onClick={handleRemoveBgFn}>Done</button>
+        </Box>
+
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={openBackdrop}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+
 
     </Box>
   )
