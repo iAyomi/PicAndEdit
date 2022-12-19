@@ -10,7 +10,6 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
-
 const Upload = (props) => {
 
     const navigate = useNavigate();
@@ -39,7 +38,7 @@ const Upload = (props) => {
         "width": null,
         "height": null,
         "size": null
-    })
+    });
 
     useEffect(() => {
         if (myImgProps.imageFile !== null) {

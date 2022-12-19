@@ -17,6 +17,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import Tooltip from '@mui/material/Tooltip';
 import Fade from '@mui/material/Fade';
 import HomeIcon from '@mui/icons-material/Home';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import { Link } from 'react-router-dom';
 import { MainPaletteContext } from '../../Services/Contexts/MainPaletteContext';
 
@@ -208,7 +209,7 @@ const StyledMenu = styled((props) => (
 
 const Actions = () => {
 
-  const { setMyMainPaletteStyle } = useContext(MainPaletteContext);
+    const { myMainPaletteStyle, setMyMainPaletteStyle } = useContext(MainPaletteContext);
 
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -222,6 +223,7 @@ const Actions = () => {
     };
 
     const handleClose = (action_name) => {
+        // console.log(action_name);
         setMyStyledMenuId(null);
         setAnchorEl(null);
     };
@@ -235,17 +237,42 @@ const Actions = () => {
       });
     };
 
+    const handleExpandClick = () => {
+      setMyMainPaletteStyle({
+        position: "fixed",
+        bottom: "0px",
+        right: "0px",
+        width: "100%"
+      });
+    };
+
   return (
     <Box>
         <List sx={styleForMyActionsBox}>
-            <Tooltip title="Go Home" followCursor>
-              <ListItem className="actionBox" disablePadding onClick={handleGoHomeClick}>
-                <Box className="actionImgBox">
-                    <HomeIcon sx={myStyle}/>
-                </Box>
-                <h6 className="actionText">Home</h6>
-              </ListItem>
-            </Tooltip>
+            {
+              myMainPaletteStyle.position === "static" 
+              ? (
+                <Tooltip title="Expand to fit Screen" followCursor>
+                  <ListItem className="actionBox" disablePadding onClick={handleExpandClick}>
+                    <Box className="actionImgBox">
+                        <OpenInFullIcon sx={myStyle}/>
+                    </Box>
+                    <h6 className="actionText">Expand</h6>
+                  </ListItem>
+                </Tooltip>
+              )
+              : (
+                <Tooltip title="Go Home" followCursor>
+                  <ListItem className="actionBox" disablePadding onClick={handleGoHomeClick}>
+                    <Box className="actionImgBox">
+                        <HomeIcon sx={myStyle}/>
+                    </Box>
+                    <h6 className="actionText">Home</h6>
+                  </ListItem>
+                </Tooltip>
+              )
+            }
+
             {
                 Object.entries(myActions).map(([action, { id, name, logo, tooltip, menu }]) => (
                    <span key={action}>

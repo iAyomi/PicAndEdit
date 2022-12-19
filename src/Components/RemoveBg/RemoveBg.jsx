@@ -16,6 +16,7 @@ import Fade from '@mui/material/Fade';
 import { UploadedPictureContext } from '../../Services/Contexts/UploadedPicture';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+// import { useNavigate } from "react-router-dom";
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -82,6 +83,8 @@ const ColorMenu = styled((props) => (
 
 const RemoveBg = () => {
 
+    // const navigate = useNavigate();
+
     const [openRemoveBg, setOpenRemoveBg] = useState('block');
 
     const myDrawerStyle = {
@@ -111,6 +114,12 @@ const RemoveBg = () => {
     const myUrl = "https://api.picsart.io/tools/1.0/removebg";
 
     const { uploadedPicture, setUploadedPicture } = useContext(UploadedPictureContext);
+
+    // useEffect(() => {
+    //     if (uploadedPicture.id === "") {
+    //         navigate("/upload");
+    //     }
+    // });
 
     const [openBgMenu, setOpenBgMenu] = useState(false);
 
