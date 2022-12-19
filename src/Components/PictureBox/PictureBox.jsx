@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import './PictureBox.css';
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { TransformWrapper, TransformComponent } from "@kokarn/react-zoom-pan-pinch";
 import { UploadedPictureContext } from '../../Services/Contexts/UploadedPicture';
 
 

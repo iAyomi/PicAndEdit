@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@kokarn/react-zoom-pan-pinch": "^2.1.5",
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.17",
     "@testing-library/jest-dom": "^5.16.5",
@@ -17,7 +18,6 @@
     "react-router-dom": "^6.4.4",
     "react-scripts": "5.0.1",
     "react-window": "^1.8.8",
-    "react-zoom-pan-pinch": "^2.1.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
