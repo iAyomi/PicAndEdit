@@ -29,7 +29,7 @@ const AddMasks = () => {
 
     const myHeadersList = {
         "accept": "application/json",
-        "X-Picsart-API-Key": "C53uQt0Nvy0FcZUTG92OVBI5kLhzEyJM"
+        "X-Picsart-API-Key": "kIBBnXRsMA5EhJZRmNGfslOv74cq00mi"
     }
     
     const myUrl = "https://api.picsart.io/tools/1.0/masks";
