@@ -64,10 +64,10 @@ const UpscaleFace = () => {
 
         if (response.status === 200) {
           let data = await response.json();
-          console.log(data)
+          // console.log(data)
           setUploadedPicture({
-            id: data.data.id,
-            url: data.data.url
+            id: data?.data?.id,
+            url: data?.data?.url
           });
           handleCloseBackdrop();
       } else {

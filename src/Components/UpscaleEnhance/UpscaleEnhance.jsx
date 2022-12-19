@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './UpscaleEnhance.css';
 import { alpha, styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -6,7 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Slider from '@mui/material/Slider';
 import InputBase from '@mui/material/InputBase';
-
+import { UploadedPictureContext } from '../../Services/Contexts/UploadedPicture';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -42,16 +44,89 @@ const MyInput = styled(InputBase)(({ theme }) => ({
 }));
 
 
-
 const UpscaleEnhance = () => {
+
+  const myHeadersList = {
+    "accept": "application/json",
+    "X-Picsart-API-Key": "7wQjPap0FmHPotOgrYkpRGyF0oq1I09O"
+  }
+
+  const myUrl = "https://api.picsart.io/tools/1.0/upscale/enhance";
+
+  const { uploadedPicture, setUploadedPicture } = useContext(UploadedPictureContext);
+
+  const [disableFn, setDisableFn] = useState(false);
+
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+
+  const handleCloseBackdrop = () => {
+    setOpenBackdrop(false);
+  };
+
+  const handleToggleBackdrop = () => {
+    setOpenBackdrop(!openBackdrop);
+  };
 
   const [openUpscaleEnhance, setOpenUpscaleEnhance] = useState("block");
 
-  const [upscaleVal, setUpscaleVal] = useState(2);
+  const [upscaleVal, setUpscaleVal] = useState(null);
+
+  useEffect(() => {
+    if (upscaleVal !== null) {
+      setDisableFn(true);
+    }
+  }, [upscaleVal]);
+
+  const [size, setSize] = useState("");
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+  const [dpi, setDpi] = useState("");
+  const [unit, setUnit] = useState("px");
+
+  const handleBtnClick = (event) => {
+    setUnit(event.target.value);
+  };
 
   const closeUpscaleEnhance = () => {
     setOpenUpscaleEnhance('none');
   };
+
+  const handleUpscaleEnhanceFn = () => {
+    if (uploadedPicture.id !== "") {
+      handleToggleBackdrop();
+      async function upscaleEnhanceImage() {
+        let headerslist = myHeadersList;
+        let bodyContent = new FormData();
+        bodyContent.append("image_id", uploadedPicture.id);
+        bodyContent.append("format", "JPG");
+        bodyContent.append("upscale_factor", upscaleVal === null ? "" : upscaleVal);
+        bodyContent.append("size", size);
+        bodyContent.append("width", width);
+        bodyContent.append("height", height);
+        bodyContent.append("dpi", dpi);
+        bodyContent.append("unit", unit);
+
+        let response = await fetch(myUrl, {
+            method: "POST",
+            body: bodyContent,
+            headers: headerslist
+        });
+
+        if (response.status === 200) {
+          let data = await response.json();
+          // console.log(data);
+          setUploadedPicture({
+            id: data?.data?.id,
+            url: data?.data?.url
+          });
+          handleCloseBackdrop();
+      } else {
+        handleCloseBackdrop();
+        let error = await response.json();
+        console.log(error);
+      }}
+      upscaleEnhanceImage();
+  }};
 
   const myDrawerStyle = {
     width: 220,
@@ -118,6 +193,9 @@ const UpscaleEnhance = () => {
           <MyInput
               placeholder="size"
               id="my-input-box"
+              disabled={disableFn}
+              value={size}
+              onChange={(event) => {setSize(event.target.value)}}
           />
         </div>
       </Box>
@@ -129,6 +207,9 @@ const UpscaleEnhance = () => {
           <MyInput
               placeholder="width >= Img width"
               id="my-input-box"
+              disabled={disableFn}
+              value={width}
+              onChange={(event) => {setWidth(event.target.value)}}
           />
         </div>
       </Box>
@@ -140,6 +221,9 @@ const UpscaleEnhance = () => {
           <MyInput
               placeholder="height >= Img height"
               id="my-input-box"
+              disabled={disableFn}
+              value={height}
+              onChange={(event) => {setHeight(event.target.value)}}
           />
         </div>
       </Box>
@@ -147,8 +231,8 @@ const UpscaleEnhance = () => {
       <Box>
           <h5>Preferred Output Image Unit</h5>
           <div className='myBgBtnDiv'>
-              <button className='myBtn'>px</button>
-              <button className='myBtn'>inch</button>
+              <button className='myBtn' disabled={disableFn} value={"px"} onClick={handleBtnClick}>px</button>
+              <button className='myBtn' disabled={disableFn} value={"inch"} onClick={handleBtnClick}>inch</button>
           </div>
       </Box>
 
@@ -160,14 +244,27 @@ const UpscaleEnhance = () => {
           <MyInput
               placeholder="dpi"
               id="my-input-box"
+              disabled={disableFn}
+              value={dpi}
+              onChange={(event) => {setDpi(event.target.value)}}
           />
         </div>
       </Box>
 
+      <Box style={{ marginTop: '10px' }}>
+        <button className='myBtn' onClick={handleUpscaleEnhanceFn}>Done</button>
+      </Box>
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackdrop}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
     </Box>
   )
 }
-
 
 
 export default UpscaleEnhance;

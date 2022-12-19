@@ -55,9 +55,9 @@ const UpscaleUltra = () => {
 
   const { uploadedPicture, setUploadedPicture } = useContext(UploadedPictureContext);
 
-  const [openBackdrop, setOpenBackdrop] = useState(false);
-
   const [disableFn, setDisableFn] = useState(false);
+
+  const [openBackdrop, setOpenBackdrop] = useState(false);
 
   const handleCloseBackdrop = () => {
     setOpenBackdrop(false);
