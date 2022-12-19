@@ -105,7 +105,7 @@ const RemoveBg = () => {
 
     const myHeadersList = {
         "accept": "application/json",
-        "X-Picsart-API-Key": "7wQjPap0FmHPotOgrYkpRGyF0oq1I09O"
+        "X-Picsart-API-Key": "C53uQt0Nvy0FcZUTG92OVBI5kLhzEyJM"
     }
     
     const myUrl = "https://api.picsart.io/tools/1.0/removebg";

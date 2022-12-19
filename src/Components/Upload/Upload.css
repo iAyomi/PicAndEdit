@@ -19,6 +19,7 @@
 }
 
 .buttonDiv {
+    margin-top: 50px;
     display: flex;
     justify-content: space-evenly;
 }
@@ -27,9 +28,9 @@
     cursor: pointer;
     min-height: 3.2rem;
     border-radius: 2rem;
-    width: 20%;
+    width: 23%;
     border: 2px solid #000000;
-    padding: 0.8rem 0;
+    padding: 1.2rem 0;
     background-color: #ffffff;
     color: #000000;
     font-size: 0.8rem;

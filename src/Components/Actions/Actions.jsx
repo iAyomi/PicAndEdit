@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import "./Actions.css";
 import { styled } from '@mui/material/styles';
 import Menu from '@mui/material/Menu';
@@ -16,7 +16,9 @@ import MergeTypeIcon from "@mui/icons-material/MergeType";
 import MailIcon from "@mui/icons-material/Mail";
 import Tooltip from '@mui/material/Tooltip';
 import Fade from '@mui/material/Fade';
+import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
+import { MainPaletteContext } from '../../Services/Contexts/MainPaletteContext';
 
 
 const myStyle={
@@ -31,7 +33,7 @@ const myStyle={
 const styleForMyActionsBox = {
   height: '100vh', 
   width: 'auto', 
-  padding: '70px 0 0 0', 
+  padding: '0 0 0 0', 
   bgcolor: '#161a25'
 }
 
@@ -204,24 +206,46 @@ const StyledMenu = styled((props) => (
     },
 }));
 
-
 const Actions = () => {
 
+  const { setMyMainPaletteStyle } = useContext(MainPaletteContext);
+
     const [anchorEl, setAnchorEl] = useState(null);
+
     const [myStyledMenuId, setMyStyledMenuId] = useState(null);
+
     const open = Boolean(anchorEl);
+
     const handleClick = (id, event) => {
         setMyStyledMenuId(id);
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = (action_name) => {
         setMyStyledMenuId(null);
         setAnchorEl(null);
     };
 
+    const handleGoHomeClick = () => {
+      setMyMainPaletteStyle({
+        position: "static",
+        bottom: "none",
+        right: "none",
+        width: "98%"
+      });
+    };
+
   return (
     <Box>
         <List sx={styleForMyActionsBox}>
+            <Tooltip title="Go Home" followCursor>
+              <ListItem className="actionBox" disablePadding onClick={handleGoHomeClick}>
+                <Box className="actionImgBox">
+                    <HomeIcon sx={myStyle}/>
+                </Box>
+                <h6 className="actionText">Home</h6>
+              </ListItem>
+            </Tooltip>
             {
                 Object.entries(myActions).map(([action, { id, name, logo, tooltip, menu }]) => (
                    <span key={action}>

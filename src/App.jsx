@@ -5,6 +5,7 @@ import Footer from './Components/Footer/Footer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import routes from './Services/routes';
 import { UploadedPictureContext } from './Services/Contexts/UploadedPicture';
+import { MainPaletteContext } from './Services/Contexts/MainPaletteContext';
 
 
 function App() {
@@ -14,8 +15,16 @@ function App() {
     url: ""
   });
 
+  const [myMainPaletteStyle, setMyMainPaletteStyle] = useState({
+    position: "static",
+    bottom: "none",
+    right: "none",
+    width: "98%"
+});
+
   return (
     <UploadedPictureContext.Provider value={{uploadedPicture, setUploadedPicture}}>
+      <MainPaletteContext.Provider value={{myMainPaletteStyle, setMyMainPaletteStyle}}>
         <Router>
           <div>
 
@@ -33,6 +42,7 @@ function App() {
 
           </div>
         </Router>
+      </MainPaletteContext.Provider>
     </UploadedPictureContext.Provider>
   );
 }
