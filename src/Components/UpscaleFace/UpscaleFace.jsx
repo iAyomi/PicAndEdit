@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './UpscaleFace.css';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
-
+import { UploadedPictureContext } from '../../Services/Contexts/UploadedPicture';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -20,11 +22,61 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const UpscaleFace = () => {
 
+  const myHeadersList = {
+    "accept": "application/json",
+    "X-Picsart-API-Key": "7wQjPap0FmHPotOgrYkpRGyF0oq1I09O"
+  }
+
+  const myUrl = "https://api.picsart.io/tools/1.0/enhance/face";
+
+  const { uploadedPicture, setUploadedPicture } = useContext(UploadedPictureContext);
+
   const [openUpscaleFace, setOpenUpscaleFace] = useState("block");
 
   const closeUpscaleFace = () => {
     setOpenUpscaleFace('none');
   };
+
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+
+  const handleCloseBackdrop = () => {
+    setOpenBackdrop(false);
+  };
+
+  const handleToggleBackdrop = () => {
+    setOpenBackdrop(!openBackdrop);
+  };
+
+  const handleUpscaleFaceFn = () => {
+    if (uploadedPicture.id !== "") {
+      handleToggleBackdrop();
+      async function upscaleFace() {
+        let headerslist = myHeadersList;
+        let bodyContent = new FormData();
+        bodyContent.append("image_id", uploadedPicture.id);
+        bodyContent.append("format", "JPG");
+
+        let response = await fetch(myUrl, {
+            method: "POST",
+            body: bodyContent,
+            headers: headerslist
+        });
+
+        if (response.status === 200) {
+          let data = await response.json();
+          console.log(data)
+          setUploadedPicture({
+            id: data.data.id,
+            url: data.data.url
+          });
+          handleCloseBackdrop();
+      } else {
+        handleCloseBackdrop();
+        let error = await response.json();
+        console.log(error);
+      }}
+      upscaleFace();
+  }};
 
   const myDrawerStyle = {
     width: 220,
@@ -57,13 +109,19 @@ const UpscaleFace = () => {
 
       <Box>
         <p>No Parameters 😑</p>
-        <button className='myBtn'>Upscale</button>
+        <button className='myBtn' onClick={handleUpscaleFaceFn}>Upscale</button>
       </Box>
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackdrop}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
 
     </Box>
   )
 }
-
 
 
 export default UpscaleFace;

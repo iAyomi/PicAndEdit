@@ -27,7 +27,7 @@ const Upscale = () => {
 
   const myHeadersList = {
     "accept": "application/json",
-    "X-Picsart-API-Key": "nZ1AmcPL4DNbTNqU6hIezYkXxLSDlxpR"
+    "X-Picsart-API-Key": "7wQjPap0FmHPotOgrYkpRGyF0oq1I09O"
   }
 
   const myUrl = "https://api.picsart.io/tools/1.0/upscale";
@@ -57,7 +57,7 @@ const Upscale = () => {
   };
 
   const handleUpscaleFn = () => {
-    if (uploadedPicture.id !== null) {
+    if (uploadedPicture.id !== "") {
       handleToggleBackdrop();
       async function upscaleImage() {
         let headerslist = myHeadersList;

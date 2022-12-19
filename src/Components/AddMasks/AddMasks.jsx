@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import './AddMasks.css'
 import Box from '@mui/material/Box';
@@ -9,6 +9,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { UploadedPictureContext } from '../../Services/Contexts/UploadedPicture';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -22,6 +26,15 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 const AddMasks = () => {
+
+    const myHeadersList = {
+        "accept": "application/json",
+        "X-Picsart-API-Key": "7wQjPap0FmHPotOgrYkpRGyF0oq1I09O"
+    }
+    
+    const myUrl = "https://api.picsart.io/tools/1.0/masks";
+
+    const { uploadedPicture, setUploadedPicture } = useContext(UploadedPictureContext);
 
     const [openAddMasks, setOpenAddMasks] = useState('block');
 
@@ -70,6 +83,16 @@ const AddMasks = () => {
 
     const [maskFlipVal, setMaskFlipVal] = useState('');
 
+    const [openBackdrop, setOpenBackdrop] = useState(false);
+
+    const handleCloseBackdrop = () => {
+        setOpenBackdrop(false);
+    };
+
+    const handleToggleBackdrop = () => {
+        setOpenBackdrop(!openBackdrop);
+    };
+
     const handleBlendChange = (event) => {
         setBlend(event.target.value);
     };
@@ -81,6 +104,40 @@ const AddMasks = () => {
     const handleMaskFlipChange = (event) => {
         setMaskFlipVal(event.target.value);
     };
+
+    const handleAddMaskFn = () => {
+        if (uploadedPicture.id !== "") {
+            handleToggleBackdrop();
+            async function addMask() {
+              let headerslist = myHeadersList;
+              let bodyContent = new FormData();
+              bodyContent.append("image_id", uploadedPicture.id);
+              bodyContent.append("format", "JPG");
+              bodyContent.append("blend", blend);
+              bodyContent.append("mask", mask);
+              bodyContent.append("opacity", opacityVal);
+              bodyContent.append("hue", hueVal);
+              bodyContent.append("mask_flip", maskFlipVal);
+             
+              let response = await fetch(myUrl, {
+                  method: "POST",
+                  body: bodyContent,
+                  headers: headerslist
+              });
+              if (response.status === 200) {
+                handleCloseBackdrop();
+                  let data = await response.json();
+                  setUploadedPicture({
+                    id: data.data.id,
+                    url: data.data.url
+                });
+            } else {
+                handleCloseBackdrop();
+                let error = await response.json();
+                console.log(error);
+        }}
+        addMask();
+    }}
 
   return (
     <Box
@@ -109,8 +166,8 @@ const AddMasks = () => {
                     <MenuItem sx={{fontSize: '0.8rem', fontWeight: '600'}} value={'overlay'}>overlay</MenuItem>
                     <MenuItem sx={{fontSize: '0.8rem', fontWeight: '600'}} value={'multiply'}>multiply</MenuItem>
                     <MenuItem sx={{fontSize: '0.8rem', fontWeight: '600'}} value={'darken'}>darken</MenuItem>
-                    <MenuItem sx={{fontSize: '0.8rem', fontWeight: '600'}} value={'darken'}>lighten</MenuItem>
-                    <MenuItem sx={{fontSize: '0.8rem', fontWeight: '600'}} value={'darken'}>add</MenuItem>
+                    <MenuItem sx={{fontSize: '0.8rem', fontWeight: '600'}} value={'lighten'}>lighten</MenuItem>
+                    <MenuItem sx={{fontSize: '0.8rem', fontWeight: '600'}} value={'add'}>add</MenuItem>
                 </Select>
             </FormControl>
         </Box>
@@ -196,6 +253,17 @@ const AddMasks = () => {
                 </Select>
             </FormControl>
         </Box>
+
+        <Box style={{ marginTop: '40px' }}>
+          <button className='myBtn' onClick={handleAddMaskFn}>Done</button>
+        </Box>
+
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={openBackdrop}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
 
     </Box>
   )

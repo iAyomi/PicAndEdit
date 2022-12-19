@@ -44,7 +44,8 @@ const myActions = {
         menu: {
           "upload": {
             menuname: "upload",
-            menulink: "/upload"
+            menulink: "/upload",
+            action_name: "Upload"
           }
         } 
     },
@@ -56,7 +57,8 @@ const myActions = {
         menu: {
           "removeBg": {
             menuname: "remove bg",
-            menulink: "/removebackground"
+            menulink: "/removebackground",
+            action_name: "Remove Background"
           }
         } 
     },
@@ -68,19 +70,23 @@ const myActions = {
         menu: {
           "upscale": {
             menuname: "upscale",
-            menulink: "/upscale"
+            menulink: "/upscale",
+            action_name: "Upscale"
           },
           "upscaleUltra": {
             menuname: "upscale ultra",
-            menulink: "/upscaleultra"
+            menulink: "/upscaleultra",
+            action_name: "Upscale Ultra"
           },
           "upscaleEnhance": {
             menuname: "upscale enhance",
-            menulink: "/upscaleenhance"
+            menulink: "/upscaleenhance",
+            action_name: "Upscale Enhance"
           },
           "upscaleFace": {
             menuname: "upscale face",
-            menulink: "/upscaleface"
+            menulink: "/upscaleface",
+            action_name: "Upscale Face"
           }
         }
     },
@@ -92,11 +98,13 @@ const myActions = {
         menu: {
           "addEffects": {
             menuname: "add effects",
-            menulink: "/addeffects"
+            menulink: "/addeffects",
+            action_name: "Add Effects"
           },
           "addMasks": {
             menuname: "add masks",
-            menulink: "/addmasks"
+            menulink: "/addmasks",
+            action_name: "Add Masks"
           }
         }
     },
@@ -108,7 +116,8 @@ const myActions = {
         menu: {
           "adjustImg": {
             menuname: "adjust img",
-            menulink: "/adjustimage"
+            menulink: "/adjustimage",
+            action_name: "Adjust Image"
           }
         }
     },
@@ -120,7 +129,8 @@ const myActions = {
         menu: {
           "transferStyle": {
             menuname: "tf style",
-            menulink: "/transferstyle"
+            menulink: "/transferstyle",
+            action_name: "Transfer Style"
           }
         }
     },
@@ -132,7 +142,8 @@ const myActions = {
         menu: {
           "generateTexture": {
             menuname: "gen texture",
-            menulink: "/generatetexture"
+            menulink: "/generatetexture",
+            action_name: "Generate Texture"
           }
         }
     },
@@ -144,7 +155,8 @@ const myActions = {
         menu: {
           "vectorize": {
             menuname: "vectorize",
-            menulink: "/vectorize"
+            menulink: "/vectorize",
+            action_name: "Vectorize"
           }
         }
     }
@@ -190,7 +202,7 @@ const StyledMenu = styled((props) => (
         },
       },
     },
-  }));
+}));
 
 
 const Actions = () => {
@@ -202,7 +214,7 @@ const Actions = () => {
         setMyStyledMenuId(id);
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
+    const handleClose = (action_name) => {
         setMyStyledMenuId(null);
         setAnchorEl(null);
     };
@@ -233,11 +245,11 @@ const Actions = () => {
                       onClose={handleClose}
                     >
                       {
-                          Object.entries(menu).map(([menuItem, { menuname, menulink }]) => (
+                          Object.entries(menu).map(([menuItem, { menuname, menulink, action_name }]) => (
                               <Link key={menuItem} style={{ color: "#ffffff", textDecoration: "none" }}
                                 to={menulink}
                               >
-                                <MenuItem style={{fontSize: '0.65rem', fontWeight: '600'}} onClick={handleClose} disableRipple>
+                                <MenuItem style={{fontSize: '0.65rem', fontWeight: '600'}} onClick={(event) => handleClose(action_name)} disableRipple>
                                   {menuname}
                                 </MenuItem>
                               </Link>
